@@ -1,0 +1,11 @@
+const { Router } = require('express');
+
+const routes = [
+];
+
+const appRouter = Router();
+routes.forEach(route => {
+    appRouter.use(route.path, route.router);
+});
+
+module.exports = appRouter;
