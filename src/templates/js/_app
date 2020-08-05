@@ -7,7 +7,7 @@ class App {
   constructor(appContext) {
     this.app = express();
     this.initializeMiddlewares();
-    this.app.use(appContext, router);
+    this.app.use('/' + appContext, router);
 
     this.app.get('*', (request, response) => {
       response.sendFile('index.html', {

@@ -1,0 +1,16 @@
+const { Router } = require('express');
+
+const {{ name }}Controller = require('../controllers/{{ name }}.controller');
+
+const {{ name }}Router = Router();
+
+{{ name }}Router.route('/')
+  .get({{ name }}Controller.findAll)
+  .post({{ name }}Controller.create);
+
+{{ name }}Router.route('/:{{ name }}Id')
+  .get({{ name }}Controller.findById)
+  .put({{ name }}Controller.update)
+  .delete({{ name }}Controller.remove);
+
+module.exports = {{ name }}Router;
