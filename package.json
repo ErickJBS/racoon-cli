@@ -1,6 +1,6 @@
 {
   "name": "racoon-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Express Aplication Project Generator",
   "bin": {
     "racoon": "dist/bin/racoon.js"
@@ -26,13 +26,12 @@
   },
   "homepage": "https://github.com/ErickJBS/racoon-cli#readme",
   "dependencies": {
-    "@types/shelljs": "^0.8.8",
-    "chalk": "^4.1.0",
+    "handlebars": "^4.7.6",
     "shelljs": "^0.8.4",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
+    "@types/shelljs": "^0.8.8",
     "@types/copyfiles": "^2.2.0",
     "@types/handlebars": "^4.1.0",
     "@types/node": "^14.0.27",
