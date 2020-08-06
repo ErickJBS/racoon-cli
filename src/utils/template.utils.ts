@@ -8,15 +8,19 @@ export const generateFileFromTemplate = (templatePath: string, dest: string, arg
   writeFileSync(dest, templateOutput);
 };
 
-export const insertText = (filePath: string, regex: string, insert: string): void => {
-  const content = readFileSync(filePath, { encoding: 'utf-8' });
-  const parts = content.split(regex);
-  const out = `${parts[0]}${regex}${insert}${parts[1]}`;
-  writeFileSync(filePath, out);
+export const findLine = (source: string, regex: RegExp): number => {
+  const content = readFileSync(source, { encoding: 'utf-8' });
+  const lines = content.split('\n');
+  for (const [i, line] of lines.entries()) {
+    if (regex.test(line)) return i;
+  }
+  // Not matching line
+  return -1;
 };
 
-export const insertTextStart = (filePath: string, insert: string): void => {
-  const content = readFileSync(filePath, { encoding: 'utf-8' });
-  const out = `${insert}${content}`;
-  writeFileSync(filePath, out);
+export const insertLine = (source: string, index: number, insert: string) => {
+  const content = readFileSync(source, { encoding: 'utf-8' });
+  const lines = content.split('\n');
+  lines.splice(index, 0, insert);
+  writeFileSync(source, lines.join('\n'));
 };

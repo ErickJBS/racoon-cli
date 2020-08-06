@@ -11,4 +11,4 @@ export const getAppArguments = () => {
 
 export const getProjectDir = () => {
   return process.cwd();
-}
+};

@@ -48,9 +48,9 @@ export class NewAction extends AbstractAction {
     const path = join(this.templatesDir, '_gitignore');
     copyFileSync(path, '.gitignore');
   
-    shell.exec('git init');
-    shell.exec('git add .');
-    shell.exec('git commit -m "Initial Commit"');
+    shell.exec('git init', { silent: true });
+    shell.exec('git add .', { silent: true });
+    shell.exec('git commit -m "Initial Commit"', { silent: true });
   }
   
   private generateIndex(language: Language, appName: string, path: string): void {
@@ -75,7 +75,7 @@ export class NewAction extends AbstractAction {
     writeFileSync(`${appName}/package.json`, out);
   
     shell.cd(appName);
-    shell.exec('npm install');
+    shell.exec('npm install', { silent: true });
   }
 
 }
