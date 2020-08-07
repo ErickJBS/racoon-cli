@@ -17,7 +17,7 @@ export class NewAction extends AbstractAction {
     const { name, lang, path } = args;
 
     if (existsSync(name)) {
-      throw new Error(`A project with the name ${name} already exists`);
+      throw new Error(`A project with the name '${name}' already exists`);
     }
     console.log(chalk.blue(`Generating new express-${lang} project`));
     mkdirSync(name + '/src/', { recursive: true });

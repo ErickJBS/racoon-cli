@@ -39,7 +39,7 @@ export class GenerateAction extends AbstractAction {
     const controllerDest = join(projectDir, `src/controllers/${args.name}.controller.${ext}`);
     const routerDest  = join(projectDir, `src/routes/${args.name}.router.${ext}`);
     if (existsSync(controllerDest) || existsSync(routerDest)) {
-      throw new Error(`A controller with the name ${args.name} already exists`);
+      throw new Error(`A controller or router with the name '${args.name}' already exists in this project`);
     }
     
     // Generating controller
