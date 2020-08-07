@@ -3,6 +3,8 @@ import { join } from 'path';
 import { compile } from 'handlebars';
 import { copyFileSync } from 'fs';
 import shell from 'shelljs';
+import ora from 'ora';
+import chalk from 'chalk';
 
 import { Language } from '../types/language';
 import { AbstractAction } from './abstract.action';
@@ -17,14 +19,20 @@ export class NewAction extends AbstractAction {
     if (existsSync(name)) {
       throw new Error(`A project with the name ${name} already exists`);
     }
-    console.log(`Generating new express-${lang} project`);
+    console.log(chalk.blue(`Generating new express-${lang} project`));
     mkdirSync(name + '/src/', { recursive: true });
-  
+
+    const spinner = ora('Generating project files').start();
     this.generateConfigFile(args);
     this.generateApp(lang, name);
     this.generateIndex(lang, name, path);
+    spinner.succeed().stop().start('Installing dependencies');
     this.generatePackage(name);
+    spinner.succeed().stop().start('Initializing git repository');
     this.initializeGit();
+    spinner.succeed();
+
+    console.log(chalk.blue('\nDone!'));
   }
 
   private generateConfigFile(args: AppArguments): void {
