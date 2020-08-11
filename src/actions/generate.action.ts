@@ -22,9 +22,25 @@ export class GenerateAction extends AbstractAction {
         console.log('service');
         break;
       case Component.MIDDLEWARE:
-        console.log('middleware');
+        this.generateMiddleware(args, config.lang);
         break;
     }
+  }
+
+  private generateMiddleware(args: AppArguments, language: Language): void {
+    const projectDir = getProjectDir();
+    const ext = language == Language.JAVASCRIPT ? 'js' : 'ts';
+    mkdirSync(projectDir+ '/src/middlewares', { recursive: true });
+
+    // looking for pre-existing files
+    const middlewareDest = join(projectDir, `src/middlewares/${args.name}.middleware.${ext}`);
+    if (existsSync(middlewareDest)) {
+      throw new Error(`A middleware with the name '${args.name}' already exists in this project`);
+    }
+
+    // Generating middleware
+    const middlewareTemplatePath = join(this.templatesDir, `${ext}/_middleware`);
+    generateFileFromTemplate(middlewareTemplatePath, middlewareDest, { name: args.name });
   }
 
   private generateController(args: AppArguments, language: Language): void {
