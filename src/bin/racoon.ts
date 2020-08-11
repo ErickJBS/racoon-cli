@@ -5,6 +5,9 @@ import { NewCommand } from '../commands/new.command';
 import { GenerateAction } from '../actions/generate.action';
 import { GenerateCommand } from '../commands/generate.command';
 
+/**
+ * Catches CLI errors and logs its message in terminal.
+ */
 process.on('uncaughtException', function(err) {
   console.error(chalk.red(err));
 });

@@ -12,7 +12,11 @@ import { AppArguments } from '../types/arguments';
 
 export class NewAction extends AbstractAction {
 
+  /**
+   * Stores the directory containging templates or code generation.
+   */
   templatesDir = join(__dirname, '../templates');
+
   public execute(args: AppArguments): void {
     const { name, lang, path } = args;
 
@@ -35,11 +39,22 @@ export class NewAction extends AbstractAction {
     console.log(chalk.blue('\nDone!'));
   }
 
+  /**
+   * Generates racoon.json file used for code generation.
+   * 
+   * @param {AppArguments} args Input arguments
+   */
   private generateConfigFile(args: AppArguments): void {
     const content = JSON.stringify(args, null, 4);
     writeFileSync(`${args.name}/racoon.json`, content);
   }
 
+  /**
+   * Generates base application files.
+   * 
+   * @param {Language} language Application language
+   * @param {string} appName Application name
+   */
   private generateApp(language: Language, appName: string): void {
     const ext = (language === Language.JAVASCRIPT) ? 'js' : 'ts';
 
@@ -52,6 +67,9 @@ export class NewAction extends AbstractAction {
     copyFileSync(routerPath, routerDest); 
   }
 
+  /**
+   * Initializes a git repository in the project folder.
+   */
   private initializeGit(): void {
     const path = join(this.templatesDir, '_gitignore');
     copyFileSync(path, '.gitignore');
@@ -61,6 +79,13 @@ export class NewAction extends AbstractAction {
     shell.exec('git commit -m "Initial Commit"', { silent: true });
   }
   
+  /**
+   * Generates index file.
+   * 
+   * @param {Language} language Application language
+   * @param {string} appName Application name
+   * @param {string} path Application context (base path)
+   */
   private generateIndex(language: Language, appName: string, path: string): void {
     const ext = language == Language.JAVASCRIPT ? 'js' : 'ts';
     const indexPath = join(this.templatesDir, `${ext}/_index`);
@@ -73,6 +98,13 @@ export class NewAction extends AbstractAction {
     writeFileSync(indexDest, output);
   }
   
+  /**
+   * Generates package.json file.
+   * 
+   * Initializes a node project and install required dependencies.
+   * 
+   * @param {string} appName Application name 
+   */
   private generatePackage(appName: string): void {
     const path = join(this.templatesDir, '_package');
     const pkg = readFileSync(path, { encoding: 'utf-8' });

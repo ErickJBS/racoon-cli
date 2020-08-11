@@ -11,7 +11,11 @@ import { Language } from '../types/language';
 
 export class GenerateAction extends AbstractAction {
 
+  /**
+   * Stores the directory containging templates or code generation.
+   */
   templatesDir = join(__dirname, '../templates');
+
   public execute(args: AppArguments): void {
     const config = getAppArguments();
 
@@ -25,6 +29,12 @@ export class GenerateAction extends AbstractAction {
     }
   }
 
+  /**
+   * Generates a new service template for express application.
+   *  
+   * @param args Input arguments
+   * @param language Application language
+   */
   private generateService(args: AppArguments, language: Language): void {
     const projectDir = getProjectDir();
     const ext = language == Language.JAVASCRIPT ? 'js' : 'ts';
@@ -44,6 +54,12 @@ export class GenerateAction extends AbstractAction {
     generateFileFromTemplate(serviceTemplatePath, serviceDest, { className, pluralName });
   }
 
+  /**
+   * Generates a new middleware template for express application.
+   * 
+   * @param args Input arguments
+   * @param language Application language
+   */
   private generateMiddleware(args: AppArguments, language: Language): void {
     const projectDir = getProjectDir();
     const ext = language == Language.JAVASCRIPT ? 'js' : 'ts';
@@ -60,6 +76,14 @@ export class GenerateAction extends AbstractAction {
     generateFileFromTemplate(middlewareTemplatePath, middlewareDest, { name: args.name });
   }
 
+  /**
+   * Generates a new controller and router.
+   * 
+   * Generates a new controller, router and add then into application router.
+   * 
+   * @param args Input arguments
+   * @param language Application language
+   */
   private generateController(args: AppArguments, language: Language): void {
     // If a route isn't specified, use controller's name
     const path = args.path || args.name;
