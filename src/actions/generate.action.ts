@@ -14,7 +14,7 @@ export class GenerateAction extends AbstractAction {
   /**
    * Stores the directory containging templates or code generation.
    */
-  templatesDir = join(__dirname, '../templates');
+  templatesDir = join(__dirname, '../../templates');
 
   public execute(args: AppArguments): void {
     const config = getAppArguments();
