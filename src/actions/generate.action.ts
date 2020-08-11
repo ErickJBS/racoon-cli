@@ -5,6 +5,7 @@ import { AbstractAction } from './abstract.action';
 import { AppArguments } from '../types/arguments';
 import { getAppArguments, getProjectDir } from '../utils/config.utils';
 import { generateFileFromTemplate, findLine, insertLine } from '../utils/template.utils';
+import { toPascalCase, pluralize } from '../utils/string.utils';
 import { Component } from '../types/component';
 import { Language } from '../types/language';
 
@@ -16,15 +17,31 @@ export class GenerateAction extends AbstractAction {
 
     switch (args.type) {
       case Component.CONTROLLER:
-        this.generateController(args, config.lang);
-        break;
+        return this.generateController(args, config.lang);
       case Component.SERVICE:
-        console.log('service');
-        break;
+        return this.generateService(args, config.lang);
       case Component.MIDDLEWARE:
-        this.generateMiddleware(args, config.lang);
-        break;
+        return this.generateMiddleware(args, config.lang);
     }
+  }
+
+  private generateService(args: AppArguments, language: Language): void {
+    const projectDir = getProjectDir();
+    const ext = language == Language.JAVASCRIPT ? 'js' : 'ts';
+    mkdirSync(projectDir+ '/src/services', { recursive: true });
+
+    // looking for pre-existing files
+    const serviceDest = join(projectDir, `src/services/${args.name}.service.${ext}`);
+    if (existsSync(serviceDest)) {
+      throw new Error(`A service with the name '${args.name}' already exists in this project`);
+    }
+
+    // Generating middleware
+    const serviceTemplatePath = join(this.templatesDir, `${ext}/_service`);
+    const className = toPascalCase(args.name);
+    const pluralName = pluralize(className);
+
+    generateFileFromTemplate(serviceTemplatePath, serviceDest, { className, pluralName });
   }
 
   private generateMiddleware(args: AppArguments, language: Language): void {

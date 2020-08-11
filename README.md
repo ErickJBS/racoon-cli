@@ -25,6 +25,6 @@ $ racoon new PROJECT_NAME [--path=APP_CONTEXT] [--lang=LANGUAGE]
 ```bash
 $ racoon generate COMPONENT NAME [--path=ROUTE]
 ```
-* Replace `COMPONENT` with _controller, service or middleware_. (Only controller is available right now). 
+* Replace `COMPONENT` with _controller, service or middleware_.
 * Replace `NAME` with _the name of your component.
 * Replace `ROUTE` with _the route of your controller_ (default is your component name).

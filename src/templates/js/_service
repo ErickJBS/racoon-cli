@@ -1,0 +1,7 @@
+class {{ className }}Service {
+  get{{ pluralName }}() {
+    return [];
+  }
+}
+
+module.exports = new {{ className }}Service();
