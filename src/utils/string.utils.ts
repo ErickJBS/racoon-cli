@@ -5,6 +5,7 @@
  * @returns {string} the input string in PascalCase
  */
 export const toPascalCase = (str: string): string => {
+  if (str === '') return '';
   return str[0].toUpperCase() + str.substr(1);
 };
 
@@ -15,5 +16,6 @@ export const toPascalCase = (str: string): string => {
  * @returns {string} the input string pluralized
  */
 export const pluralize = (str: string): string => {
+  if (str === '') return '';
   return (str.endsWith('s'))? str : str + 's';
 };
