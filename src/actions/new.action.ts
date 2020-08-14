@@ -9,6 +9,7 @@ import chalk from 'chalk';
 import { Language } from '../types/language';
 import { AbstractAction } from './abstract.action';
 import { AppArguments } from '../types/arguments';
+import { generateFileFromTemplate } from '../utils/template.utils';
 
 export class NewAction extends AbstractAction {
 
@@ -25,11 +26,13 @@ export class NewAction extends AbstractAction {
     }
     console.log(chalk.blue(`Generating new express-${lang} project`));
     mkdirSync(name + '/src/', { recursive: true });
+    mkdirSync(name + '/public/', { recursive: true });
 
     const spinner = ora('Generating project files').start();
     this.generateConfigFile(args);
     this.generateApp(lang, name);
     this.generateIndex(lang, name, path);
+    this.generatePublic(name);
     spinner.succeed().stop().start('Installing dependencies');
     this.generatePackage(name);
     spinner.succeed().stop().start('Initializing git repository');
@@ -65,6 +68,12 @@ export class NewAction extends AbstractAction {
   
     copyFileSync(appPath, appDest);
     copyFileSync(routerPath, routerDest); 
+  }
+
+  private generatePublic(appName: string): void {
+    const htmlTemplate = join(this.templatesDir, '_html');
+    const htmlDest = `${appName}/public/index.html`;
+    generateFileFromTemplate(htmlTemplate, htmlDest, { appName });
   }
 
   /**

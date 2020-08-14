@@ -9,6 +9,8 @@ class App {
     this.initializeMiddlewares();
     this.app.use('/' + appContext, router);
 
+    this.app.use(express.static('public'));
+
     this.app.get('*', (request, response) => {
       response.sendFile('index.html', {
         root: 'public'
