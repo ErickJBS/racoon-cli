@@ -1,6 +1,6 @@
 const findAll = (request, response) => {
   return response.json([]);
-}
+};
 
 const findById = (request, response) => {
   const {{ name }}Id = request.params.{{ name }}Id;
@@ -10,19 +10,19 @@ const findById = (request, response) => {
 const create = (request, response) => {
   const fields = request.body;
   return response.json({});
-}
+};
 
 const update = (request, response) => {
   const {{ name }}Id = request.params.{{ name }}Id;
-  const fields = request.body
+  const fields = request.body;
   return response.json({});
-}
+};
 
 const remove = (request, response) => {
   const {{ name }}Id = request.params.{{ name }}Id;
   return response.json({});
-}
+};
 
 module.exports = {
   findAll, findById, create, update, remove
-}
+};
