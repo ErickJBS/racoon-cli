@@ -7,7 +7,7 @@
   },
   "scripts": {
     "clean": "rimraf dist/",
-    "lint": "eslint \"src/{bin,lib,commands,actions}/**/*.ts\" --fix",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "prebuild": "npm run lint",
     "build": "npm run clean && tsc",
     "dev": "npm run build && npm start",
