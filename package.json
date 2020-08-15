@@ -1,6 +1,6 @@
 {
   "name": "racoon-cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Express Aplication Project Generator",
   "bin": {
     "racoon": "dist/bin/racoon.js"
@@ -14,6 +14,17 @@
     "start": "node dist/bin/racoon.js",
     "test": "jest --coverage"
   },
+  "keywords": [
+    "express",
+    "cli",
+    "generator",
+    "typescript",
+    "javascript",
+    "web",
+    "rest",
+    "api",
+    "metaprogramming"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ErickJBS/racoon-cli.git"
