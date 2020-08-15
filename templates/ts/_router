@@ -1,0 +1,15 @@
+import { Router } from 'express';
+import { findAll, findById, create, update, remove } from '../controllers/{{ name }}.controller';
+
+const {{ name }}Router = Router();
+
+{{ name }}Router.route('/')
+  .get(findAll)
+  .post(create);
+
+{{ name }}Router.route('/:{{ name }}Id')
+  .get(findById)
+  .put(update)
+  .delete(remove);
+
+export default {{ name }}Router;

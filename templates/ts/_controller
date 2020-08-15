@@ -1,0 +1,26 @@
+import { Request, Response } from 'express';
+
+export const findAll = (request: Request, response: Response) => {
+  return response.json([]);
+};
+
+export const findById = (request: Request, response: Response) => {
+  const {{ name }}Id = request.params.{{ name }}Id;
+  return response.json({});
+};
+
+export const create = (request: Request, response: Response) => {
+  const fields = request.body;
+  return response.json({});
+};
+
+export const update = (request: Request, response: Response) => {
+  const {{ name }}Id = request.params.{{ name }}Id;
+  const fields = request.body;
+  return response.json({});
+};
+
+export const remove = (request: Request, response: Response) => {
+  const {{ name }}Id = request.params.{{ name }}Id;
+  return response.json({});
+};

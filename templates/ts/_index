@@ -1,0 +1,15 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { App } from './app';
+
+const appContext = '{{ path }}';
+const port = process.env.PORT || 3000;
+
+const application = new App(appContext);
+
+application
+  .listen(port)
+  .then(() => {
+    console.log(`App is running on port ${port}`);
+  });

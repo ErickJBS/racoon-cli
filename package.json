@@ -1,6 +1,6 @@
 {
   "name": "racoon-cli",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Express Aplication Project Generator",
   "bin": {
     "racoon": "dist/bin/racoon.js"

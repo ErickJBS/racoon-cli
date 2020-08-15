@@ -1,0 +1,7 @@
+import { Request, Response, NextFunction } from 'express';
+
+export default (request: Request, response: Response, next: NextFunction) => {
+  // Replace with the actual logic of your middleware
+  console.log('{{ name }} middleware executed');
+  next();
+};

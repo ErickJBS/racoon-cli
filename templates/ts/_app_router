@@ -1,0 +1,11 @@
+import { Router } from 'express';
+
+const routes: any[] = [
+];
+
+const appRouter = Router();
+routes.forEach((route: any) => {
+  appRouter.use(route.path, route.router);
+});
+
+export default appRouter;

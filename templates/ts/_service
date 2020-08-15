@@ -1,0 +1,7 @@
+class {{ className }}Service {
+  get{{ pluralName }}(): any[] {
+    return [];
+  }
+}
+
+export default new {{ className }}Service();

@@ -2,7 +2,7 @@
 
 ## Description
 
-Racoon CLI is a command-line interface tool that initializes and helps you create components for [ExpressJS](https://expressjs.com/es/) applications. You can generate JavaScript and TypeScript (still in development) projects and automatically generate controllers, services and middlewares, maintaining consistency and structure.
+Racoon CLI is a command-line interface tool that initializes and helps you create components for [ExpressJS](https://expressjs.com/es/) applications. You can generate JavaScript and TypeScript projects and automatically generate controllers, services and middlewares, maintaining consistency and structure.
 
 ## Installation
 
@@ -27,4 +27,4 @@ $ racoon generate COMPONENT NAME [--path=ROUTE]
 ```
 * Replace `COMPONENT` with _controller, service or middleware_.
 * Replace `NAME` with _the name of your component.
-* Replace `ROUTE` with _the route of your controller_ (default is your component name).
+* Replace `ROUTE` with _the route of your controller_ (default is your component name). Controller only.

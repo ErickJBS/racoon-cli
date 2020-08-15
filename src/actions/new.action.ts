@@ -1,6 +1,5 @@
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join } from 'path';
-import { compile } from 'handlebars';
 import { copyFileSync } from 'fs';
 import shell from 'shelljs';
 import ora from 'ora';
@@ -34,7 +33,7 @@ export class NewAction extends AbstractAction {
     this.generateIndex(lang, name, path);
     this.generatePublic(name);
     spinner.succeed().stop().start('Installing dependencies');
-    this.generatePackage(name);
+    this.generatePackage(lang, name);
     spinner.succeed().stop().start('Initializing git repository');
     this.initializeGit();
     spinner.succeed();
@@ -68,8 +67,23 @@ export class NewAction extends AbstractAction {
   
     copyFileSync(appPath, appDest);
     copyFileSync(routerPath, routerDest); 
+
+    if (language == Language.TYPESCRIPT) {
+      const eslintPath = join(this.templatesDir, `${ext}/_eslint`);
+      const tsconfigPath = join(this.templatesDir, `${ext}/_tsconfig`);
+      const eslintDest = `${appName}/.eslintrc.yml`;
+      const tsconfigDest = `${appName}/tsconfig.json`;
+  
+      copyFileSync(eslintPath, eslintDest);
+      copyFileSync(tsconfigPath, tsconfigDest); 
+    }
   }
 
+  /**
+   * Generates public folder and index.html file.
+   * 
+   * @param {string} appName Application name
+   */
   private generatePublic(appName: string): void {
     const htmlTemplate = join(this.templatesDir, '_html');
     const htmlDest = `${appName}/public/index.html`;
@@ -99,12 +113,8 @@ export class NewAction extends AbstractAction {
     const ext = language == Language.JAVASCRIPT ? 'js' : 'ts';
     const indexPath = join(this.templatesDir, `${ext}/_index`);
     const indexDest = `${appName}/src/index.${ext}`;
-  
-    const index = readFileSync(indexPath, { encoding: 'utf-8' });
-    const template = compile(index);
-    const output = template({ path });
-  
-    writeFileSync(indexDest, output);
+
+    generateFileFromTemplate(indexPath, indexDest, { path });
   }
   
   /**
@@ -114,14 +124,12 @@ export class NewAction extends AbstractAction {
    * 
    * @param {string} appName Application name 
    */
-  private generatePackage(appName: string): void {
-    const path = join(this.templatesDir, '_package');
-    const pkg = readFileSync(path, { encoding: 'utf-8' });
-  
-    const template = compile(pkg);
-    const out = template({ project: appName });
-  
-    writeFileSync(`${appName}/package.json`, out);
+  private generatePackage(language: Language, appName: string): void {
+    const ext = language == Language.JAVASCRIPT ? 'js' : 'ts';
+    const path = join(this.templatesDir, `${ext}/_package`);
+    const dest = `${appName}/package.json`;
+
+    generateFileFromTemplate(path, dest, { project: appName });
   
     shell.cd(appName);
     shell.exec('npm install', { silent: true });
